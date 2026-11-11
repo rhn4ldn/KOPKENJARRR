@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kopi Kenangan Senja')
+@section('title', 'Kedai Kopi Kenangan Senja | Kopi Hangat, Suasana Senja')
 
 @section('content')
 
@@ -9,7 +9,7 @@
     <div class="mask-container">
       <main class="content">
         <h1>Mari Nikmati Secangkir <span>Kopi</span></h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, enim.</p>
+        <p>Selamat datang di Kedai Kopi Kenangan Senja — tempat singgah untuk menikmati kopi hangat dengan suasana senja yang tenang dan bersahabat.</p>
       </main>
     </div>
   </section>
@@ -21,14 +21,12 @@
 
     <div class="row">
       <div class="about-img">
-        <img src="{{ asset('img/tentang-kami.jpg') }}" alt="Tentang Kami">
+        <img src="{{ asset('img/tentang-kami.jpg') }}" alt="Suasana hangat dan nyaman di dalam Kedai Kopi Kenangan Senja">
       </div>
       <div class="content">
-        <h3>Kenapa memilih kopi kami?</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ducimus voluptatum dolor. Et, voluptatum
-          accusantium!</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic deserunt iure amet facilis eos a quo cum
-          voluptates molestias nihil.</p>
+        <h3>Kenapa Kopi Kenangan Senja?</h3>
+        <p>Kedai Kopi Kenangan Senja adalah kedai kopi dengan suasana hangat, santai, dan nyaman — tempat yang pas untuk menikmati secangkir kopi sambil berbincang, bekerja, atau sekadar beristirahat sejenak dari aktivitas harian.</p>
+        <p>Nama Kenangan Senja terinspirasi dari momen senja yang tenang dan hangat, saat hari mulai mereda dan secangkir kopi terasa paling nikmat. Setiap kunjungan ingin kami buat terasa seperti pulang — sederhana, akrab, dan berkesan.</p>
       </div>
     </div>
   </section>
@@ -37,110 +35,80 @@
   <!-- Menu Section start -->
   <section id="menu" class="menu">
     <h2><span>Menu</span> Kami</h2>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita, repellendus numquam quam tempora voluptatum.
-    </p>
+    <p>Dari espresso yang pekat hingga latte yang lembut dan cappuccino yang creamy — semua diracik untuk menemani momen santaimu, kapan pun kamu datang.</p>
 
-    <div class="row">
-      <div class="menu-card">
-        <img src="{{ asset('img/menu/1.jpg') }}" alt="Espresso" class="menu-card-img">
-        <h3 class="menu-card-title">- Espresso -</h3>
-        <p class="menu-card-price">IDR 15K</p>
-      </div>
-      <div class="menu-card">
-        <img src="{{ asset('img/menu/1.jpg') }}" alt="Espresso" class="menu-card-img">
-        <h3 class="menu-card-title">- Capuccino -</h3>
-        <p class="menu-card-price">IDR 25K</p>
-      </div>
-      <div class="menu-card">
-        <img src="{{ asset('img/menu/1.jpg') }}" alt="Espresso" class="menu-card-img">
-        <h3 class="menu-card-title">- Latte -</h3>
-        <p class="menu-card-price">IDR 20K</p>
-      </div>
-      <div class="menu-card">
-        <img src="{{ asset('img/menu/1.jpg') }}" alt="Espresso" class="menu-card-img">
-        <h3 class="menu-card-title">- Espresso -</h3>
-        <p class="menu-card-price">IDR 15K</p>
-      </div>
-      <div class="menu-card">
-        <img src="{{ asset('img/menu/1.jpg') }}" alt="Espresso" class="menu-card-img">
-        <h3 class="menu-card-title">- Espresso -</h3>
-        <p class="menu-card-price">IDR 15K</p>
-      </div>
-      <div class="menu-card">
-        <img src="{{ asset('img/menu/1.jpg') }}" alt="Espresso" class="menu-card-img">
-        <h3 class="menu-card-title">- Espresso -</h3>
-        <p class="menu-card-price">IDR 15K</p>
-      </div>
+    <div class="menu-filter">
+      <input type="search" id="menu-search" placeholder="Cari menu..." aria-label="Cari menu">
+      <select id="menu-category-filter" aria-label="Filter kategori">
+        <option value="">Semua Kategori</option>
+        @foreach ($customerCategories as $value => $label)
+          <option value="{{ $value }}">{{ $label }}</option>
+        @endforeach
+      </select>
     </div>
+
+    <div class="row" id="menu-list">
+      @forelse ($menuItems as $menu)
+        <div class="menu-card {{ $menu->is_available ? '' : 'is-unavailable' }}" data-name="{{ strtolower($menu->name) }}" data-category="{{ $menu->category }}">
+          @unless ($menu->is_available)
+            <span class="badge-unavailable">Tidak Tersedia</span>
+          @endunless
+          <img src="{{ $menu->imageUrl() }}" alt="{{ $menu->name }} Kedai Kopi Kenangan Senja" class="menu-card-img">
+          <h3 class="menu-card-title">- {{ $menu->name }} -</h3>
+          @if ($menu->description)
+            <p class="menu-card-desc">{{ $menu->description }}</p>
+          @endif
+          <p class="menu-card-price">{{ $menu->formatPrice() }}</p>
+        </div>
+      @empty
+        <p class="empty-state">Belum ada menu yang tersedia saat ini. Silakan cek kembali nanti.</p>
+      @endforelse
+    </div>
+    <p class="empty-state menu-filter-empty" id="menu-filter-empty" hidden>Tidak ada menu yang cocok dengan pencarianmu.</p>
   </section>
   <!-- Menu Section end -->
 
   <!-- Products Section start -->
   <section class="products" id="products">
     <h2><span>Produk Unggulan</span> Kami</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo unde eum, ab fuga possimus iste.</p>
+    <p>Biji kopi pilihan kami untuk kamu yang ingin membawa pulang cita rasa Kenangan Senja dan menyeduhnya sendiri di rumah.</p>
 
     <div class="row">
-      <div class="product-card">
-        <div class="product-icons">
-          <a href="#"><i data-feather="shopping-cart"></i></a>
-          <a href="#" class="item-detail-button"><i data-feather="eye"></i></a>
-        </div>
-        <div class="product-image">
-          <img src="{{ asset('img/products/1.jpg') }}" alt="Product 1">
-        </div>
-        <div class="product-content">
-          <h3>Coffee Beans 1</h3>
-          <div class="product-stars">
-            <i data-feather="star" class="star-full"></i>
-            <i data-feather="star" class="star-full"></i>
-            <i data-feather="star" class="star-full"></i>
-            <i data-feather="star" class="star-full"></i>
-            <i data-feather="star"></i>
+      @forelse ($produkItems as $produk)
+        <div class="product-card {{ $produk->is_available ? '' : 'is-unavailable' }}">
+          @unless ($produk->is_available)
+            <span class="badge-unavailable">Tidak Tersedia</span>
+          @endunless
+          <div class="product-icons">
+            <a href="#"><i data-feather="shopping-cart"></i></a>
+            <a href="#" class="item-detail-button"
+               data-name="{{ $produk->name }}"
+               data-description="{{ $produk->description }}"
+               data-price="{{ $produk->formatPrice() }}"
+               data-compare-price="{{ $produk->compare_price ? $produk->formatPrice($produk->compare_price) : '' }}"
+               data-image="{{ $produk->imageUrl() }}"><i data-feather="eye"></i></a>
           </div>
-          <div class="product-price">IDR 30K <span>IDR 55K</span></div>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-icons">
-          <a href="#"><i data-feather="shopping-cart"></i></a>
-          <a href="#" class="item-detail-button"><i data-feather="eye"></i></a>
-        </div>
-        <div class="product-image">
-          <img src="{{ asset('img/products/1.jpg') }}" alt="Product 1">
-        </div>
-        <div class="product-content">
-          <h3>Coffee Beans 1</h3>
-          <div class="product-stars">
-            <i data-feather="star"></i>
-            <i data-feather="star"></i>
-            <i data-feather="star"></i>
-            <i data-feather="star"></i>
-            <i data-feather="star"></i>
+          <div class="product-image">
+            <img src="{{ $produk->imageUrl() }}" alt="{{ $produk->name }} — biji kopi pilihan Kedai Kopi Kenangan Senja">
           </div>
-          <div class="product-price">IDR 30K <span>IDR 55K</span></div>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-icons">
-          <a href="#"><i data-feather="shopping-cart"></i></a>
-          <a href="#" class="item-detail-button"><i data-feather="eye"></i></a>
-        </div>
-        <div class="product-image">
-          <img src="{{ asset('img/products/1.jpg') }}" alt="Product 1">
-        </div>
-        <div class="product-content">
-          <h3>Coffee Beans 1</h3>
-          <div class="product-stars">
-            <i data-feather="star"></i>
-            <i data-feather="star"></i>
-            <i data-feather="star"></i>
-            <i data-feather="star"></i>
-            <i data-feather="star"></i>
+          <div class="product-content">
+            <h3>{{ $produk->name }}</h3>
+            @if ($produk->description)
+              <p class="product-desc">{{ $produk->description }}</p>
+            @endif
+            <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star"></i>
+            </div>
+            <div class="product-price">{{ $produk->formatPrice() }}@if ($produk->compare_price) <span>{{ $produk->formatPrice($produk->compare_price) }}</span>@endif</div>
           </div>
-          <div class="product-price">IDR 30K <span>IDR 55K</span></div>
         </div>
-      </div>
+      @empty
+        <p class="empty-state">Belum ada produk yang tersedia saat ini.</p>
+      @endforelse
     </div>
   </section>
   <!-- Products Section end -->
@@ -148,28 +116,27 @@
   <!-- Contact Section start -->
   <section id="contact" class="contact">
     <h2><span>Kontak</span> Kami</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, provident.
-    </p>
+    <p>Punya pertanyaan, kritik, atau sekadar ingin menyapa? Kami senang mendengar dari kamu — hubungi Kedai Kopi Kenangan Senja melalui formulir di bawah ini.</p>
 
     <div class="row">
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.56347862248!2d107.57311709235512!3d-6.903444341687889!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6398252477f%3A0x146a1f93d3e815b2!2sBandung%2C%20Bandung%20City%2C%20West%20Java!5e0!3m2!1sen!2sid!4v1672408575523!5m2!1sen!2sid"
-        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map"></iframe>
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map" title="Peta lokasi Kedai Kopi Kenangan Senja, Bandung"></iframe>
 
       <form action="">
         <div class="input-group">
           <i data-feather="user"></i>
-          <input type="text" placeholder="nama">
+          <input type="text" placeholder="Nama kamu">
         </div>
         <div class="input-group">
           <i data-feather="mail"></i>
-          <input type="text" placeholder="email">
+          <input type="text" placeholder="Email kamu">
         </div>
         <div class="input-group">
           <i data-feather="phone"></i>
-          <input type="text" placeholder="no hp">
+          <input type="text" placeholder="Nomor HP / WhatsApp">
         </div>
-        <button type="submit" class="btn">kirim pesan</button>
+        <button type="submit" class="btn">Kirim Pesan</button>
       </form>
 
     </div>

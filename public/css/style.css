@@ -666,3 +666,79 @@ footer .credit a {
     font-size: 55%;
   }
 }
+
+/* Katalog Dinamis: filter, deskripsi, badge tidak tersedia */
+.menu-filter {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.menu-filter input,
+.menu-filter select {
+  background-color: #111;
+  color: #fff;
+  border: 1px solid #513c28;
+  border-radius: 0.5rem;
+  padding: 0.9rem 1.4rem;
+  font-size: 1.4rem;
+  font-family: 'Poppins', sans-serif;
+  min-width: 22rem;
+}
+
+.menu-filter input:focus,
+.menu-filter select:focus {
+  border-color: var(--primary);
+}
+
+.menu .row .menu-card {
+  position: relative;
+}
+
+.menu .row .menu-card .menu-card-desc {
+  font-size: 1.2rem;
+  color: #ccc;
+  max-width: 32rem;
+  margin: 0.5rem auto 0;
+  line-height: 1.5;
+}
+
+.products .product-card {
+  position: relative;
+}
+
+.products .product-card .product-desc {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin: 0.5rem auto 1rem;
+  line-height: 1.5;
+}
+
+.badge-unavailable {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background-color: rgba(163, 51, 51, 0.85);
+  color: #ffd7d7;
+  border: 1px solid #a33;
+  border-radius: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.3rem 1rem;
+  z-index: 2;
+}
+
+.is-unavailable img {
+  opacity: 0.5;
+  filter: grayscale(60%);
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #aaa;
+  font-size: 1.5rem;
+  padding: 3rem 1rem;
+}

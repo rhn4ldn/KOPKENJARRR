@@ -64,3 +64,59 @@ window.onclick = (e) => {
     itemDetailModal.style.display = 'none';
   }
 };
+
+// Katalog: pencarian nama & filter kategori (client-side)
+const menuSearch = document.querySelector('#menu-search');
+const menuCategoryFilter = document.querySelector('#menu-category-filter');
+const menuCards = document.querySelectorAll('#menu-list .menu-card');
+const menuFilterEmpty = document.querySelector('#menu-filter-empty');
+
+function applyMenuFilter() {
+  const q = menuSearch.value.trim().toLowerCase();
+  const cat = menuCategoryFilter.value;
+  let visible = 0;
+
+  menuCards.forEach((card) => {
+    const matchName = !q || (card.dataset.name || '').includes(q);
+    const matchCategory = !cat || card.dataset.category === cat;
+    const show = matchName && matchCategory;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  if (menuFilterEmpty) {
+    menuFilterEmpty.hidden = visible !== 0;
+  }
+}
+
+if (menuSearch && menuCategoryFilter) {
+  menuSearch.addEventListener('input', applyMenuFilter);
+  menuCategoryFilter.addEventListener('change', applyMenuFilter);
+}
+
+// Modal detail produk: isi konten dari data produk yang diklik
+const modalImage = document.querySelector('#modal-image');
+const modalName = document.querySelector('#modal-name');
+const modalDescription = document.querySelector('#modal-description');
+const modalPrice = document.querySelector('#modal-price');
+
+itemDetailButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    if (btn.dataset.name && modalName) {
+      modalName.textContent = btn.dataset.name;
+    }
+    if (modalDescription) {
+      modalDescription.textContent = btn.dataset.description || '';
+      modalDescription.style.display = btn.dataset.description ? '' : 'none';
+    }
+    if (btn.dataset.image && modalImage) {
+      modalImage.src = btn.dataset.image;
+      modalImage.alt = btn.dataset.name || 'Produk';
+    }
+    if (modalPrice && btn.dataset.price) {
+      modalPrice.innerHTML = btn.dataset.comparePrice
+        ? btn.dataset.price + ' <span>' + btn.dataset.comparePrice + '</span>'
+        : btn.dataset.price;
+    }
+  });
+});

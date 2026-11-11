@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@yield('title', 'Kopi Kenangan Senja')</title>
+  <meta name="description" content="Kedai Kopi Kenangan Senja — kedai kopi dengan suasana hangat dan santai. Nikmati espresso, cappuccino, latte, dan biji kopi pilihan kami.">
+  <title>@yield('title', 'Kedai Kopi Kenangan Senja')</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -7,7 +7,7 @@
     </div>
 
     <div class="links">
-      <a href="#home">Home</a>
+      <a href="#home">Beranda</a>
       <a href="#about">Tentang Kami</a>
       <a href="#menu">Menu</a>
       <a href="#contact">Kontak</a>
